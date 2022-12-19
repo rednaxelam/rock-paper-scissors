@@ -107,10 +107,11 @@ function getNumberOfRounds() {
 }
 
 // Prompts the player to choose whether or not they want to play again. Function will continue to prompt the player unless they choose y, yes, n, or no.
-function playAgain(choice) {
+function playAgain() {
+  let choice = prompt("Play again?");
   while (!isValidPlayAgainChoice(choice)) {
     console.log('Please select a valid choice (yes or no)')
-    choice = prompt('Would you like to play again? \nType and enter yes or no');
+    choice = prompt('Would you like to play again? \n(Type and enter yes or no!)');
   }
   if (choice === 'y' || choice === 'yes') {
     console.log('');
@@ -157,8 +158,7 @@ function playGame() {
   }
   console.log('Thank you for playing! Would you like to play another game? (type and enter yes or no)');
   console.log('');
-  const playAgainChoice = prompt("Play again?");
-  playAgain(playAgainChoice);
+  playAgain();
 }
 
 alert("You can play rock paper scissors via the developer console. Head over there for more information!")
