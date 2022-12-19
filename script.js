@@ -14,7 +14,7 @@ function getPlayerSelection() {
   
   if (!isValidPlayerSelection(choice)) {
     while (!isValidPlayerSelection(choice)) {
-      console.log("Please choose a valid option! (type and enter r, rock, p, paper, s, or scissors to make you choice!): ")
+      console.log("Please choose a valid option! (type and enter r, rock, p, paper, s, or scissors to make you choice!): ");
       choice = prompt("Enter your choice here! \n (type and enter r, rock, p, paper, s, or scissors to make you choice!)" ).toLowerCase();
     }
   }
@@ -110,7 +110,7 @@ function getNumberOfRounds() {
 function playAgain() {
   let choice = prompt("Play again?");
   while (!isValidPlayAgainChoice(choice)) {
-    console.log('Please select a valid choice (yes or no)')
+    console.log('Please select a valid choice (yes or no)');
     choice = prompt('Would you like to play again? \n(Type and enter yes or no!)');
   }
   if (choice === 'y' || choice === 'yes') {
@@ -134,7 +134,7 @@ function playGame() {
   let computerWins = 0;
   let numberOfDraws = 0;
   console.log('');
-  console.log("To make a choice, type and enter r, rock, p, paper, s, or scissors!")
+  console.log("To make a choice, type and enter r, rock, p, paper, s, or scissors!");
   while (roundsPlayed < numberOfRounds) {
     console.log("Please make your choice!");
     const playerSelection = getPlayerSelection();
@@ -161,7 +161,7 @@ function playGame() {
   playAgain();
 }
 
-alert("You can play rock paper scissors via the developer console. Head over there for more information!")
+alert("You can play rock paper scissors via the developer console. Head over there for more information!");
 console.log("Hello! It is time to play rock paper scissors! The player who wins the most rounds wins!");
 console.log("When you need to make a choice, you can enter it via the prompt that will appear on the webpage");
 console.log("Type and enter playGame() to get started!");
