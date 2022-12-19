@@ -82,11 +82,11 @@ function printCurrentScores(playerWins, numberOfDraws, computerWins) {
 
 function printFinalResult(playerWins, numberOfDraws, computerWins) {
   if (playerWins > computerWins) {
-    console.log("\nnYou won the game! Congratulations! " + finalTotals(playerWins, numberOfDraws, computerWins));
+    console.log("\nYou won the game! Congratulations! " + finalTotals(playerWins, numberOfDraws, computerWins));
   } else if (computerWins > playerWins) {
     console.log("\nOh no! You lost the game! " + finalTotals(playerWins, numberOfDraws, computerWins));
   } else {
-    console.log("\nYou drew the game! \nFinal results: " + finalTotals(playerWins, numberOfDraws, computerWins));
+    console.log("\nYou drew the game! " + finalTotals(playerWins, numberOfDraws, computerWins));
   }
 }
 
