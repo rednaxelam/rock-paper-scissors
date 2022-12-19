@@ -123,7 +123,7 @@ function playGame() {
   console.log('');
   console.log("To make a choice, type and enter r, rock, p, paper, s, or scissors!")
   while (roundsPlayed < numberOfRounds) {
-    console.log("Please make you choice!");
+    console.log("Please make your choice!");
     const playerSelection = getPlayerSelection();
     const computerSelection = getComputerSelection();
     const result = playRound(playerSelection, computerSelection);
