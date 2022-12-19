@@ -77,7 +77,7 @@ function makePlural(numDistinct) {
 }
 
 function printCurrentScores(playerWins, numberOfDraws, computerWins) {
-  console.log(`Current results: You have won ${playerWins} round${makePlural(playerWins)}, there have been ${numberOfDraws} draw${makePlural(numberOfDraws)}, and the computer has won ${computerWins} round${makePlural(computerWins)}`);
+  console.log(`Current results: You have won ${playerWins} round${makePlural(playerWins)}, the computer has won ${computerWins} round${makePlural(computerWins)}, ${numberOfDraws} draw${makePlural(numberOfDraws)}`);
 }
 
 function printFinalResult(playerWins, numberOfDraws, computerWins) {
@@ -91,7 +91,7 @@ function printFinalResult(playerWins, numberOfDraws, computerWins) {
 }
 
 function finalTotals(playerWins, numberOfDraws, computerWins) {
-  return `\nFinal results:  You won ${playerWins} round${makePlural(playerWins)}, there were ${numberOfDraws} draw${makePlural(numberOfDraws)}, and the computer won ${computerWins} round${makePlural(computerWins)}`;
+  return `\nFinal results:  You won ${playerWins} round${makePlural(playerWins)}, the computer won ${computerWins} round${makePlural(computerWins)}, ${numberOfDraws} draw${makePlural(numberOfDraws)}`;
 }
 
 // Prompts the player to choose the number of rounds they want to play. function will continue to prompt the player until they enter an integer.
