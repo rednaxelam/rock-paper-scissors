@@ -1,4 +1,4 @@
-// Choose a random integer from 0 to 2. If 0 return 'rock', if 1 return 'paper', if 2 return 'scissors'.
+// Generate a random integer from 0 to 2. If 0 return 'rock', if 1 return 'paper', if 2 return 'scissors'.
 function getComputerSelection() {
   let randomNumber = Math.floor(Math.random() * 3);
   switch (randomNumber) {
@@ -44,7 +44,7 @@ function capitalizeString(str) {
   }
 }
 
-// Given a selection by the player and the computer, determine the outcome of the round.
+// Given a selection by the player and the computer, determine the outcome of the round. 1 means the player won, 0 means a draw, and -1 means the computer won.
 function playRound(playerSelection, computerSelection) {
   let win = ((playerSelection == 'rock' && computerSelection == 'scissors')
             || (playerSelection == 'scissors' && computerSelection == 'paper')
