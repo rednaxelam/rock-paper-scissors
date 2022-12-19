@@ -1,6 +1,6 @@
 // Generate a random integer from 0 to 2. If 0 return 'rock', if 1 return 'paper', if 2 return 'scissors'.
 function getComputerSelection() {
-  let randomNumber = Math.floor(Math.random() * 3);
+  const randomNumber = Math.floor(Math.random() * 3);
   switch (randomNumber) {
     case 0: return 'rock';
     case 1: return 'paper';
@@ -10,7 +10,7 @@ function getComputerSelection() {
 
 // Prompt the player to choose rock, paper, or scissors. If they don't enter a value that can be understood as being rock, paper, or scissors, then continue prompting until they do so.
 function getPlayerSelection() {
-  choice = prompt("Enter your choice here!").toLowerCase();
+  let choice = prompt("Enter your choice here!").toLowerCase();
   
   if (!isValidPlayerSelection(choice)) {
     while (!isValidPlayerSelection(choice)) {
@@ -46,7 +46,7 @@ function capitalizeString(str) {
 
 // Given a selection by the player and the computer, determine the outcome of the round. 1 means the player won, 0 means a draw, and -1 means the computer won.
 function playRound(playerSelection, computerSelection) {
-  let win = ((playerSelection == 'rock' && computerSelection == 'scissors')
+  const win = ((playerSelection == 'rock' && computerSelection == 'scissors')
             || (playerSelection == 'scissors' && computerSelection == 'paper')
             || (playerSelection == 'paper' && computerSelection == 'rock'));
   if (win) {
