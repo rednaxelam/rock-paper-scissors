@@ -68,18 +68,30 @@ function printResult(outcome, playerSelection, computerSelection) {
   }
 }
 
+function makePlural(numDistinct) {
+  if (numDistinct === 1) {
+    return '';
+  } else {
+    return 's';
+  }
+}
+
 function printCurrentScores(playerWins, numberOfDraws, computerWins) {
-  console.log(`Current results: You have won ${playerWins} rounds, there have been ${numberOfDraws} draws, and the computer has won ${computerWins} rounds`);
+  console.log(`Current results: You have won ${playerWins} round${makePlural(playerWins)}, there have been ${numberOfDraws} draw${makePlural(numberOfDraws)}, and the computer has won ${computerWins} round${makePlural(computerWins)}`);
 }
 
 function printFinalResult(playerWins, numberOfDraws, computerWins) {
   if (playerWins > computerWins) {
-    console.log(`You won the game! Congratulations! \nFinal results:  You won ${playerWins} rounds, there were ${numberOfDraws} draws, and the computer won ${computerWins} rounds`);
+    console.log("You won the game! Congratulations! " + finalTotals(playerWins, numberOfDraws, computerWins));
   } else if (computerWins > playerWins) {
-    console.log(`Oh no! You lost the game! \nFinal results: You won ${playerWins} rounds, there were ${numberOfDraws} draws, and the computer won ${computerWins} rounds`);
+    console.log("Oh no! You lost the game! " + finalTotals(playerWins, numberOfDraws, computerWins));
   } else {
-    console.log(`You drew the game! \nFinal results: You won ${playerWins} rounds, there were ${numberOfDraws} draws, and the computer won ${computerWins} rounds`);
+    console.log("You drew the game! \nFinal results: " + finalTotals(playerWins, numberOfDraws, computerWins));
   }
+}
+
+function finalTotals(playerWins, numberOfDraws, computerWins) {
+  return `\nFinal results:  You won ${playerWins} round${makePlural(playerWins)}, there were ${numberOfDraws} draw${makePlural(numberOfDraws)}, and the computer won ${computerWins} round${makePlural(computerWins)}`;
 }
 
 // Prompts the player to choose the number of rounds they want to play. function will continue to prompt the player until they enter an integer.
