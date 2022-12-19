@@ -97,11 +97,11 @@ function finalTotals(playerWins, numberOfDraws, computerWins) {
 // Prompts the player to choose the number of rounds they want to play. function will continue to prompt the player until they enter an integer.
 function getNumberOfRounds() {
   let numRounds = Number(prompt("Enter how many rounds you'd like to play here!"));
-  let validInt = Number.isInteger(numRounds);
+  let validInt = Number.isInteger(numRounds) && numRounds > 0;
   while (!validInt) {
-    console.log("Please choose an integer (whole number): ");
-    numRounds = Number(prompt("Enter how many rounds you'd like to play here! \n Please choose an integer (whole number)"));
-    validInt = Number.isInteger(numRounds);
+    console.log("Please choose a positive integer (whole number): ");
+    numRounds = Number(prompt("Enter how many rounds you'd like to play here! \n Please choose a positive integer (whole number)"));
+    validInt = Number.isInteger(numRounds) && numRounds > 0;
   }
   return numRounds;
 }
