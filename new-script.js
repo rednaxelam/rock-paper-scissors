@@ -1,15 +1,15 @@
 displayStartFrame();
 
 function displayStartFrame() {
+  clearFrame();
   const mainContainer = getMainContainer();
   
   const title = createElement('h1', {"id": "logo"});
   title.textContent = "Rock Paper Scissors";
-  mainContainer.appendChild(title);
   
   const choiceDiv = createChoiceDiv({'I am ready': displayRoundSelectionFrame, 'I am not ready': displayNotReadyFrame});
   
-  
+  mainContainer.appendChild(title);
   mainContainer.appendChild(choiceDiv);
 }
 
@@ -18,7 +18,9 @@ function displayNotReadyFrame() {
   const mainContainer = getMainContainer();
   const message = createElement('h1');
   message.textContent = 'Come back when you are ready';
-  mainContainer.appendChild(message);
+  const choiceDiv = createChoiceDiv({'Wait! Maybe I am ready...': displayStartFrame});
+  mainContainer.append(message);
+  mainContainer.appendChild(choiceDiv);
 }
 
 function displayRoundSelectionFrame() {
