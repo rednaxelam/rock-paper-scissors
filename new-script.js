@@ -1,4 +1,6 @@
 displayStartFrame();
+let numWinsRequired = 0;
+
 
 function displayStartFrame() {
   clearFrame();
@@ -19,11 +21,56 @@ function displayNotReadyFrame() {
   const message = createElement('h1');
   message.textContent = 'Come back when you are ready';
   const choiceDiv = createChoiceDiv({'Wait! Maybe I am ready...': displayStartFrame});
-  mainContainer.append(message);
+  mainContainer.appendChild(message);
   mainContainer.appendChild(choiceDiv);
 }
 
 function displayRoundSelectionFrame() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  const message = createElement('h1');
+  message.textContent = 'Best of ...?';
+  const choiceDiv = createChoiceDiv({'3': displayHandChoiceFrame, '5': displayHandChoiceFrame, '7': displayHandChoiceFrame, 'other': displayRoundInputFrame});
+  mainContainer.appendChild(message);
+  mainContainer.appendChild(choiceDiv);
+}
+
+function displayRoundInputFrame() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  const message = createElement('h1');
+  message.textContent = "Write the number of rounds you'd like to play below and hit enter";
+  const choiceDiv = createElement('div', {'class': ['choices']});
+  const goBack = createElement('button');
+  goBack.textContent = 'go back?';
+  goBack.addEventListener('click', displayRoundSelectionFrame);
+  const numRoundsInput = createElement('input');
+  numRoundsInput.addEventListener('keyup', checkValid);
+  choiceDiv.appendChild(goBack);
+  choiceDiv.appendChild(numRoundsInput);
+  
+  mainContainer.appendChild(message);
+  mainContainer.appendChild(choiceDiv);
+}
+
+function checkValid(e) {
+  if (e.key !== "Enter") return;
+  numSupplied = Number(this.value);
+  if (!validNumberOfRounds(numSupplied)) {
+    alert('Please enter an odd whole number that is greater than 0!')
+    return;
+  } else {
+    displayHandChoiceFrame(e, numSupplied);
+  }
+}
+
+function validNumberOfRounds(num) {
+  return Number.isInteger(num) && num > 0 && num % 2 == 1;
+}
+
+function displayHandChoiceFrame(e, numSupplied) {
+  if (numSupplied !== undefined) numWinsRequired = Math.floor(numSupplied / 2)+ 1;
+  else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
   clearFrame();
 }
 
@@ -53,7 +100,6 @@ function createElement(type, attributes = {}) {
       element.setAttribute(key, attributes[key]);
     }
   }
-  console.log(element);
   return element;
 }
 
