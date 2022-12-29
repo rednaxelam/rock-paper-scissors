@@ -126,42 +126,42 @@ function isValidPlayAgainChoice(choice) {
   return choice === 'y' || choice === 'n' || choice === 'yes' || choice === 'no';
 }
 
-function playGame() {
-  console.log("Please choose how many rounds you'd like to play: ");
-  const numberOfRounds = getNumberOfRounds();
-  let roundsPlayed = 0;
-  let playerWins = 0;
-  let computerWins = 0;
-  let numberOfDraws = 0;
-  console.log('');
-  console.log("To make a choice, type and enter r, rock, p, paper, s, or scissors!");
-  while (roundsPlayed < numberOfRounds) {
-    console.log("Please make your choice!");
-    const playerSelection = getPlayerSelection();
-    const computerSelection = getComputerSelection();
-    const result = playRound(playerSelection, computerSelection);
-    if (result === 1) {
-      playerWins++;
-    } else if (result === 0) {
-      numberOfDraws++;
-    } else {
-      computerWins++;
-    }
-    printResult(result, playerSelection, computerSelection);
-    if (roundsPlayed < numberOfRounds - 1) {
-      printCurrentScores(playerWins, numberOfDraws, computerWins);
-    } else {
-      printFinalResult(playerWins, numberOfDraws, computerWins);
-    }
-    roundsPlayed++;
-    console.log('');
-  }
-  console.log('Thank you for playing! Would you like to play another game? (type and enter yes or no)');
-  console.log('');
-  playAgain();
-}
+// function playGame() {
+//   console.log("Please choose how many rounds you'd like to play: ");
+//   const numberOfRounds = getNumberOfRounds();
+//   let roundsPlayed = 0;
+//   let playerWins = 0;
+//   let computerWins = 0;
+//   let numberOfDraws = 0;
+//   console.log('');
+//   console.log("To make a choice, type and enter r, rock, p, paper, s, or scissors!");
+//   while (roundsPlayed < numberOfRounds) {
+//     console.log("Please make your choice!");
+//     const playerSelection = getPlayerSelection();
+//     const computerSelection = getComputerSelection();
+//     const result = playRound(playerSelection, computerSelection);
+//     if (result === 1) {
+//       playerWins++;
+//     } else if (result === 0) {
+//       numberOfDraws++;
+//     } else {
+//       computerWins++;
+//     }
+//     printResult(result, playerSelection, computerSelection);
+//     if (roundsPlayed < numberOfRounds - 1) {
+//       printCurrentScores(playerWins, numberOfDraws, computerWins);
+//     } else {
+//       printFinalResult(playerWins, numberOfDraws, computerWins);
+//     }
+//     roundsPlayed++;
+//     console.log('');
+//   }
+//   console.log('Thank you for playing! Would you like to play another game? (type and enter yes or no)');
+//   console.log('');
+//   playAgain();
+// }
 
-alert("You can play rock paper scissors via the developer console. Head over there for more information!");
-console.log("Hello! It is time to play rock paper scissors! The player who wins the most rounds wins!");
-console.log("When you need to make a choice, you can enter it via the prompt that will appear on the webpage");
-console.log("Type and enter playGame() to get started!");
+// alert("You can play rock paper scissors via the developer console. Head over there for more information!");
+// console.log("Hello! It is time to play rock paper scissors! The player who wins the most rounds wins!");
+// console.log("When you need to make a choice, you can enter it via the prompt that will appear on the webpage");
+// console.log("Type and enter playGame() to get started!");
