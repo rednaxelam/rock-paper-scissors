@@ -1,5 +1,7 @@
 displayStartFrame();
 let numWinsRequired = 0;
+let playerWins = 0;
+let computerWins = 0;
 
 
 function displayStartFrame() {
@@ -60,7 +62,7 @@ function checkValid(e) {
     alert('Please enter an odd whole number that is greater than 0!')
     return;
   } else {
-    displayHandChoiceFrame(e, numSupplied);
+    displayHandChoiceFrame(e, numSupplied, true);
   }
 }
 
@@ -69,9 +71,97 @@ function validNumberOfRounds(num) {
 }
 
 function displayHandChoiceFrame(e, numSupplied) {
-  if (numSupplied !== undefined) numWinsRequired = Math.floor(numSupplied / 2)+ 1;
-  else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
+  if (this["data-first-pass"] !== "false") {
+    if (numSupplied !== undefined) numWinsRequired = Math.floor(numSupplied / 2)+ 1;
+    else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
+  }
   clearFrame();
+  const mainContainer = getMainContainer();
+  const message = createElement('h1');
+  message.textContent = 'Make your selection';
+  const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
+  mainContainer.appendChild(message);
+  mainContainer.appendChild(choiceDiv);
+}
+
+function displayRoundResultFrame() {
+  const mainContainer = getMainContainer();
+  const playerChoice = this.textContent;
+  const computerChoice = determineComputerSelection();
+  let outcome = playRound(playerChoice, computerChoice);
+  if (outcome === 1) playerWins++;
+  if (outcome === -1) computerWins++;
+  if (playerWins === numWinsRequired || computerWins === numWinsRequired) {
+
+  } else {
+    clearFrame();
+    const outcomeText = createElement('h1');
+    outcomeText.textContent = calculateOutcomeString(outcome, playerChoice, computerChoice);
+    const currentResults = createElement('p');
+    currentResults.textContent = calculateCurrentScoreString(playerWins, computerWins);
+    const continueButton = createChoiceDiv({'continue': displayHandChoiceFrame});
+    continueButton.setAttribute("data-first-pass", "false");
+    continueButton.addEventListener('click', displayHandChoiceFrame);
+    mainContainer.appendChild(outcomeText);
+    mainContainer.appendChild(currentResults);
+    mainContainer.appendChild(continueButton);
+  }
+}
+
+
+
+function playRound(playerSelection, computerSelection) {
+  const win = ((playerSelection === 'rock' && computerSelection === 'scissors')
+            || (playerSelection === 'scissors' && computerSelection === 'paper')
+            || (playerSelection === 'paper' && computerSelection === 'rock'));
+  if (win) {
+    return 1;
+  } else if (playerSelection === computerSelection) {
+    return 0;
+  } else {
+    return -1;
+  }
+}
+
+function calculateOutcomeString(outcome, playerSelection, computerSelection) {
+  if (outcome == 1) {
+    return `You won! ${capitalizeString(playerSelection)} beats ${computerSelection}.`;
+  } else if (outcome == 0) {
+    return `You drew! You both chose ${playerSelection}.`;
+  } else {
+    return `You lost! ${capitalizeString(playerSelection)} loses to ${computerSelection}.`;
+  }
+}
+
+function makePlural(numDistinct) {
+  if (numDistinct === 1) {
+    return '';
+  } else {
+    return 's';
+  }
+}
+
+function capitalizeString(str) {
+  if (str.length === 0) {
+    return str;
+  } else if (str.length === 1) {
+    return str.charAt(0).toUpperCase();
+  } else {
+    return str.charAt(0).toUpperCase() + str.substring(1, str.length);
+  }
+}
+
+function calculateCurrentScoreString(playerWins, computerWins) {
+  return `Current results: You have won ${playerWins} round${makePlural(playerWins)}, and the computer has won ${computerWins} round${makePlural(computerWins)}`;
+}
+
+function determineComputerSelection() {
+  const randomNumber = Math.floor(Math.random() * 3);
+  switch (randomNumber) {
+    case 0: return 'rock';
+    case 1: return 'paper';
+    default: return 'scissors';
+  }
 }
 
 function clearFrame() {
