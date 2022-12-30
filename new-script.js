@@ -1,7 +1,7 @@
 displayStartFrame();
-let numWinsRequired = 0;
-let playerWins = 0;
-let computerWins = 0;
+let numWinsRequired;
+let playerWins;
+let computerWins;
 
 
 function displayStartFrame() {
@@ -28,11 +28,14 @@ function displayNotReadyFrame() {
 }
 
 function displayRoundSelectionFrame() {
+  numWinsRequired = 0;
+  playerWins = 0;
+  computerWins = 0;
   clearFrame();
   const mainContainer = getMainContainer();
   const message = createElement('h1');
   message.textContent = 'Best of ...?';
-  const choiceDiv = createChoiceDiv({'3': displayHandChoiceFrame, '5': displayHandChoiceFrame, '7': displayHandChoiceFrame, 'other': displayRoundInputFrame});
+  const choiceDiv = createChoiceDiv({'3': displayFirstHandChoiceFrame, '5': displayFirstHandChoiceFrame, '7': displayFirstHandChoiceFrame, 'other': displayRoundInputFrame});
   mainContainer.appendChild(message);
   mainContainer.appendChild(choiceDiv);
 }
@@ -62,7 +65,7 @@ function checkValid(e) {
     alert('Please enter an odd whole number that is greater than 0!')
     return;
   } else {
-    displayHandChoiceFrame(e, numSupplied, true);
+    displayFirstHandChoiceFrame(e, numSupplied);
   }
 }
 
@@ -70,11 +73,19 @@ function validNumberOfRounds(num) {
   return Number.isInteger(num) && num > 0 && num % 2 == 1;
 }
 
-function displayHandChoiceFrame(e, numSupplied) {
-  if (this["data-first-pass"] !== "false") {
-    if (numSupplied !== undefined) numWinsRequired = Math.floor(numSupplied / 2)+ 1;
-    else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
-  }
+function displayFirstHandChoiceFrame(e, numSupplied) {
+  if (numSupplied !== undefined) numWinsRequired = Math.floor(numSupplied / 2)+ 1;
+  else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
+  clearFrame();
+  const mainContainer = getMainContainer();
+  const message = createElement('h1');
+  message.textContent = 'Make your selection';
+  const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
+  mainContainer.appendChild(message);
+  mainContainer.appendChild(choiceDiv);
+}
+
+function displayHandChoiceFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
   const message = createElement('h1');
@@ -92,7 +103,18 @@ function displayRoundResultFrame() {
   if (outcome === 1) playerWins++;
   if (outcome === -1) computerWins++;
   if (playerWins === numWinsRequired || computerWins === numWinsRequired) {
-
+    clearFrame();
+    const finalResultText = createElement('h1');
+    finalResultText.textContent = calculateFinalResultString(playerWins, computerWins);
+    const finalTotals = createElement('p');
+    finalTotals.textContent = calculateFinalTotalsString(playerWins, computerWins);
+    const playAgainMessage = createElement('p');
+    playAgainMessage.textContent = 'Would you like to play again?';
+    const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayThankYouFrame});
+    mainContainer.appendChild(finalResultText);
+    mainContainer.appendChild(finalTotals);
+    mainContainer.appendChild(playAgainMessage);
+    mainContainer.appendChild(choiceDiv);
   } else {
     clearFrame();
     const outcomeText = createElement('h1');
@@ -106,6 +128,14 @@ function displayRoundResultFrame() {
     mainContainer.appendChild(currentResults);
     mainContainer.appendChild(continueButton);
   }
+}
+
+function displayThankYouFrame() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  const thankYouMessage = createElement('h1');
+  thankYouMessage.textContent = 'Thank you for playing!';
+  mainContainer.appendChild(thankYouMessage);
 }
 
 
@@ -131,6 +161,20 @@ function calculateOutcomeString(outcome, playerSelection, computerSelection) {
   } else {
     return `You lost! ${capitalizeString(playerSelection)} loses to ${computerSelection}.`;
   }
+}
+
+function calculateFinalResultString(playerWins, computerWins) {
+  if (playerWins > computerWins) {
+    return "You won the game! Congratulations!";
+  } else if (computerWins > playerWins) {
+    return "Oh no! You lost the game!";
+  } else {
+    return "You drew the game!";
+  }
+}
+
+function calculateFinalTotalsString(playerWins, computerWins) {
+  return `Final results:  You won ${playerWins} round${makePlural(playerWins)}, and the computer won ${computerWins} round${makePlural(computerWins)}`;
 }
 
 function makePlural(numDistinct) {
