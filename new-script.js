@@ -9,7 +9,7 @@ function displayStartFrame() {
   const mainContainer = getMainContainer();
   
   const title = createElement('h1', {"id": "logo"});
-  title.textContent = "Rock Paper Scissors";
+  title.textContent = "Are you ready?";
   
   const choiceDiv = createChoiceDiv({'I am ready': displayRoundSelectionFrame, 'I am not ready': displayNotReadyFrame});
   
