@@ -51,8 +51,10 @@ button, input {
   min-width: 200px;
   height: 50px;
   border-radius: 10px;
+  background-color: silver;
+  text-align: center;
+  border: 5px solid rgb(97, 97, 221);
 }
-
 
 
 p {
