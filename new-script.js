@@ -1,17 +1,55 @@
-displayStartFrame();
+displayIntroFrame1();
 let numWinsRequired;
 let playerWins;
 let computerWins;
 
+function displayIntroFrame1() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  
+  const title = createElement('h1', {"class": ["text-background"]});
+  title.textContent = "Humans have been at war with the robots for a 1,000,000,000 years in a bid to control the universe.";
+  
+  const choiceDiv = createChoiceDiv({'continue': displayIntroFrame2});
+  
+  mainContainer.appendChild(title);
+  mainContainer.appendChild(choiceDiv);
+}
+
+function displayIntroFrame2() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  
+  const title = createElement('h1', {"class": ["text-background"]});
+  title.textContent = "With no end to the war in sight, it has been decided that a game of rock paper scissors will determine the winner of the war.";
+  
+  const choiceDiv = createChoiceDiv({'continue': displayIntroFrame3});
+  
+  mainContainer.appendChild(title);
+  mainContainer.appendChild(choiceDiv);
+}
+
+function displayIntroFrame3() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  
+  const title = createElement('h1', {"class": ["text-background"]});
+  title.textContent = "You have been chose to represent humanity in this game.";
+  
+  const choiceDiv = createChoiceDiv({'continue': displayStartFrame});
+  
+  mainContainer.appendChild(title);
+  mainContainer.appendChild(choiceDiv);
+}
 
 function displayStartFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
   
-  const title = createElement('h1', {"id": "logo"});
+  const title = createElement('h1', {"class": ["text-background"]});
   title.textContent = "Are you ready?";
   
-  const choiceDiv = createChoiceDiv({'I am ready': displayRoundSelectionFrame, 'I am not ready': displayNotReadyFrame});
+  const choiceDiv = createChoiceDiv({'I am ready': displayRoundSelectionFrame, 'wait...': displayNotReadyFrame});
   
   mainContainer.appendChild(title);
   mainContainer.appendChild(choiceDiv);
@@ -20,9 +58,9 @@ function displayStartFrame() {
 function displayNotReadyFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1');
-  message.textContent = 'Come back when you are ready';
-  const choiceDiv = createChoiceDiv({'Wait! Maybe I am ready...': displayStartFrame});
+  const message = createElement('h1', {"class": ["text-background"]});
+  message.textContent = 'You are our last hope. Please do this for us.';
+  const choiceDiv = createChoiceDiv({'ok...': displayRoundSelectionFrame});
   mainContainer.appendChild(message);
   mainContainer.appendChild(choiceDiv);
 }
@@ -33,7 +71,7 @@ function displayRoundSelectionFrame() {
   computerWins = 0;
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1');
+  const message = createElement('h1', {"class": ["text-background"]});
   message.textContent = 'Best of ...?';
   const choiceDiv = createChoiceDiv({'3': displayFirstHandChoiceFrame, '5': displayFirstHandChoiceFrame, '7': displayFirstHandChoiceFrame, 'other': displayRoundInputFrame});
   mainContainer.appendChild(message);
@@ -43,7 +81,7 @@ function displayRoundSelectionFrame() {
 function displayRoundInputFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1');
+  const message = createElement('h1', {"class": ["text-background"]});
   message.textContent = "Write the number of rounds you'd like to play below and hit enter";
   const choiceDiv = createElement('div', {'class': ['choices']});
   const goBack = createElement('button');
@@ -78,7 +116,7 @@ function displayFirstHandChoiceFrame(e, numSupplied) {
   else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1');
+  const message = createElement('h1', {"class": ["text-background"]});
   message.textContent = 'Make your selection';
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
   mainContainer.appendChild(message);
@@ -88,7 +126,7 @@ function displayFirstHandChoiceFrame(e, numSupplied) {
 function displayHandChoiceFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1');
+  const message = createElement('h1', {"class": ["text-background"]});
   message.textContent = 'Make your selection';
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
   mainContainer.appendChild(message);
@@ -104,38 +142,46 @@ function displayRoundResultFrame() {
   if (outcome === -1) computerWins++;
   if (playerWins === numWinsRequired || computerWins === numWinsRequired) {
     clearFrame();
+    const textContent = createElement('div', {"class": ["text-background"]});
     const finalResultText = createElement('h1');
     finalResultText.textContent = calculateFinalResultString(playerWins, computerWins);
     const finalTotals = createElement('p');
     finalTotals.textContent = calculateFinalTotalsString(playerWins, computerWins);
-    const playAgainMessage = createElement('p');
-    playAgainMessage.textContent = 'Would you like to play again?';
-    const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayThankYouFrame});
-    mainContainer.appendChild(finalResultText);
-    mainContainer.appendChild(finalTotals);
+    const playAgainMessage = createElement('p', {"class": ["text-background"]});
+    playAgainMessage.textContent = 'Use secret time travel machine to reverse time and start again?';
+    const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayEndFrame});
+    textContent.appendChild(finalResultText);
+    textContent.appendChild(finalTotals);
+    mainContainer.appendChild(textContent);
     mainContainer.appendChild(playAgainMessage);
     mainContainer.appendChild(choiceDiv);
   } else {
     clearFrame();
+    const textContent = createElement('div', {"class": ["text-background"]});
     const outcomeText = createElement('h1');
     outcomeText.textContent = calculateOutcomeString(outcome, playerChoice, computerChoice);
     const currentResults = createElement('p');
     currentResults.textContent = calculateCurrentScoreString(playerWins, computerWins);
     const continueButton = createChoiceDiv({'continue': displayHandChoiceFrame});
-    continueButton.setAttribute("data-first-pass", "false");
+    continueButton.setAttribute("data-first-pass", "false"); //delete?
     continueButton.addEventListener('click', displayHandChoiceFrame);
-    mainContainer.appendChild(outcomeText);
-    mainContainer.appendChild(currentResults);
+    textContent.appendChild(outcomeText);
+    textContent.appendChild(currentResults);
+    mainContainer.appendChild(textContent);
     mainContainer.appendChild(continueButton);
   }
 }
 
-function displayThankYouFrame() {
+function displayEndFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const thankYouMessage = createElement('h1');
-  thankYouMessage.textContent = 'Thank you for playing!';
-  mainContainer.appendChild(thankYouMessage);
+  const endMessage = createElement('h1', {"class": ["text-background"]});
+  if (playerWins > computerWins) {
+    endMessage.textContent = 'A glorious new era for humanity awaits!';
+  } else {
+    endMessage.textContent = 'You have doomed us all. You were the wrong choice...';
+  }
+  mainContainer.appendChild(endMessage);
 }
 
 
@@ -165,11 +211,9 @@ function calculateOutcomeString(outcome, playerSelection, computerSelection) {
 
 function calculateFinalResultString(playerWins, computerWins) {
   if (playerWins > computerWins) {
-    return "You won the game! Congratulations!";
-  } else if (computerWins > playerWins) {
-    return "Oh no! You lost the game!";
+    return "Humanity has been saved!";
   } else {
-    return "You drew the game!";
+    return "Humanity has been doomed...";
   }
 }
 
