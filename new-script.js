@@ -21,7 +21,7 @@ function displayIntroFrame2() {
   const mainContainer = getMainContainer();
   
   const title = createElement('h1', {"class": ["text-background"]});
-  title.textContent = "With no end to the war in sight, it has been decided that a game of rock paper scissors will determine the winner of the war.";
+  title.textContent = "With no end in sight, it has been decided that a game of rock paper scissors will determine the winner of the war.";
   
   const choiceDiv = createChoiceDiv({'continue': displayIntroFrame3});
   
@@ -34,7 +34,20 @@ function displayIntroFrame3() {
   const mainContainer = getMainContainer();
   
   const title = createElement('h1', {"class": ["text-background"]});
-  title.textContent = "You have been chose to represent humanity in this game.";
+  title.textContent = "You have been chosen to represent humanity in this game.";
+  
+  const choiceDiv = createChoiceDiv({'continue': displayIntroFrame4});
+  
+  mainContainer.appendChild(title);
+  mainContainer.appendChild(choiceDiv);
+}
+
+function displayIntroFrame4() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  
+  const title = createElement('h1', {"class": ["text-background"]});
+  title.textContent = "You will face the leader of the robots: the computer.";
   
   const choiceDiv = createChoiceDiv({'continue': displayStartFrame});
   
@@ -59,7 +72,7 @@ function displayNotReadyFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
   const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = 'You are our last hope. Please do this for us.';
+  message.textContent = 'This might be our only chance to win the war. Please do this for us.';
   const choiceDiv = createChoiceDiv({'ok...': displayRoundSelectionFrame});
   mainContainer.appendChild(message);
   mainContainer.appendChild(choiceDiv);
@@ -82,7 +95,7 @@ function displayRoundInputFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
   const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = "Write the number of rounds you'd like to play below and hit enter";
+  message.textContent = "Write the number of rounds you'd like to play below and hit enter.";
   const choiceDiv = createElement('div', {'class': ['choices']});
   const goBack = createElement('button');
   goBack.textContent = 'go back?';
@@ -100,7 +113,7 @@ function checkValid(e) {
   if (e.key !== "Enter") return;
   numSupplied = Number(this.value);
   if (!validNumberOfRounds(numSupplied)) {
-    alert('Please enter an odd whole number that is greater than 0!')
+    alert('There must be a winner. Choose an odd number.')
     return;
   } else {
     displayFirstHandChoiceFrame(e, numSupplied);
@@ -117,7 +130,7 @@ function displayFirstHandChoiceFrame(e, numSupplied) {
   clearFrame();
   const mainContainer = getMainContainer();
   const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = 'Make your selection';
+  message.textContent = 'Make your decision';
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
   mainContainer.appendChild(message);
   mainContainer.appendChild(choiceDiv);
@@ -127,7 +140,7 @@ function displayHandChoiceFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
   const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = 'Make your selection';
+  message.textContent = 'Make your decision';
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
   mainContainer.appendChild(message);
   mainContainer.appendChild(choiceDiv);
@@ -148,7 +161,7 @@ function displayRoundResultFrame() {
     const finalTotals = createElement('p');
     finalTotals.textContent = calculateFinalTotalsString(playerWins, computerWins);
     const playAgainMessage = createElement('p', {"class": ["text-background"]});
-    playAgainMessage.textContent = 'Use secret time travel machine to reverse time and start again?';
+    playAgainMessage.textContent = 'Use your secret time travel machine to reverse time and start again?';
     const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayEndFrame});
     textContent.appendChild(finalResultText);
     textContent.appendChild(finalTotals);
@@ -201,11 +214,11 @@ function playRound(playerSelection, computerSelection) {
 
 function calculateOutcomeString(outcome, playerSelection, computerSelection) {
   if (outcome == 1) {
-    return `You won! ${capitalizeString(playerSelection)} beats ${computerSelection}.`;
+    return `You won the round. ${capitalizeString(playerSelection)} beats ${computerSelection}.`;
   } else if (outcome == 0) {
-    return `You drew! You both chose ${playerSelection}.`;
+    return `You drew the round. You both chose ${playerSelection}.`;
   } else {
-    return `You lost! ${capitalizeString(playerSelection)} loses to ${computerSelection}.`;
+    return `You lost the round. ${capitalizeString(playerSelection)} loses to ${computerSelection}.`;
   }
 }
 
@@ -213,12 +226,12 @@ function calculateFinalResultString(playerWins, computerWins) {
   if (playerWins > computerWins) {
     return "Humanity has been saved!";
   } else {
-    return "Humanity has been doomed...";
+    return "Humanity has been doomed";
   }
 }
 
 function calculateFinalTotalsString(playerWins, computerWins) {
-  return `Final results:  You won ${playerWins} round${makePlural(playerWins)}, and the computer won ${computerWins} round${makePlural(computerWins)}`;
+  return `Final results:  You won ${playerWins} round${makePlural(playerWins)}, and the computer won ${computerWins} round${makePlural(computerWins)}.`;
 }
 
 function makePlural(numDistinct) {
@@ -240,7 +253,7 @@ function capitalizeString(str) {
 }
 
 function calculateCurrentScoreString(playerWins, computerWins) {
-  return `Current results: You have won ${playerWins} round${makePlural(playerWins)}, and the computer has won ${computerWins} round${makePlural(computerWins)}`;
+  return `Current results: You have won ${playerWins} round${makePlural(playerWins)}, and the computer has won ${computerWins} round${makePlural(computerWins)}.`;
 }
 
 function determineComputerSelection() {
