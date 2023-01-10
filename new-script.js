@@ -56,13 +56,9 @@ function displayRoundInputFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', "Write the number of rounds you'd like to play below and hit enter."]]);
-  const choiceDiv = createElement('div', {'class': ['choices']});
-  const goBack = createElement('button');
-  goBack.textContent = 'go back?';
-  goBack.addEventListener('click', displayRoundSelectionFrame);
+  const choiceDiv = createChoiceDiv({'go back?': displayRoundSelectionFrame});
   const numRoundsInput = createElement('input');
   numRoundsInput.addEventListener('keyup', checkValid);
-  choiceDiv.appendChild(goBack);
   choiceDiv.appendChild(numRoundsInput);
   
   mainContainer.append(textBox, choiceDiv);
