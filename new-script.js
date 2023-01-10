@@ -5,76 +5,41 @@ let computerWins;
 
 function displayIntroFrame1() {
   clearFrame();
-  const mainContainer = getMainContainer();
-  
-  const title = createElement('h1', {"class": ["text-background"]});
-  title.textContent = "Humans have been at war with the robots for a 1,000,000,000 years in a bid to control the universe.";
-  
-  const choiceDiv = createChoiceDiv({'continue': displayIntroFrame2});
-  
-  mainContainer.appendChild(title);
-  mainContainer.appendChild(choiceDiv);
+  buildIntroFrame("Humans have been at war with the robots for a 1,000,000,000 years in a bid to control the universe.", displayIntroFrame2);
 }
 
 function displayIntroFrame2() {
   clearFrame();
-  const mainContainer = getMainContainer();
-  
-  const title = createElement('h1', {"class": ["text-background"]});
-  title.textContent = "With no end in sight, it has been decided that a game of rock paper scissors will determine the winner of the war.";
-  
-  const choiceDiv = createChoiceDiv({'continue': displayIntroFrame3});
-  
-  mainContainer.appendChild(title);
-  mainContainer.appendChild(choiceDiv);
+  buildIntroFrame("With no end in sight, it has been decided that a game of rock paper scissors will determine the winner of the war.", displayIntroFrame3);
 }
 
 function displayIntroFrame3() {
   clearFrame();
-  const mainContainer = getMainContainer();
-  
-  const title = createElement('h1', {"class": ["text-background"]});
-  title.textContent = "You have been chosen to represent humanity in this game.";
-  
-  const choiceDiv = createChoiceDiv({'continue': displayIntroFrame4});
-  
-  mainContainer.appendChild(title);
-  mainContainer.appendChild(choiceDiv);
+  buildIntroFrame("You have been chosen to represent humanity in this game.", displayIntroFrame4);
 }
 
 function displayIntroFrame4() {
   clearFrame();
-  const mainContainer = getMainContainer();
-  
-  const title = createElement('h1', {"class": ["text-background"]});
-  title.textContent = "You will face the leader of the robots: the computer.";
-  
-  const choiceDiv = createChoiceDiv({'continue': displayStartFrame});
-  
-  mainContainer.appendChild(title);
-  mainContainer.appendChild(choiceDiv);
+  buildIntroFrame("You will face the leader of the robots: the computer.", displayStartFrame);
 }
 
 function displayStartFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  
-  const title = createElement('h1', {"class": ["text-background"]});
-  title.textContent = "Are you ready?";
-  
+
+  const textBox = createTextBox([['h1', "Are you ready?"]])
   const choiceDiv = createChoiceDiv({'I am ready': displayRoundSelectionFrame, 'wait...': displayNotReadyFrame});
   
-  mainContainer.appendChild(title);
+  mainContainer.appendChild(textBox);
   mainContainer.appendChild(choiceDiv);
 }
 
 function displayNotReadyFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = 'This might be our only chance to win the war. Please do this for us.';
+  const textBox = createTextBox([['h1', 'This might be our only chance to win the war. Please do this for us.']]);
   const choiceDiv = createChoiceDiv({'ok...': displayRoundSelectionFrame});
-  mainContainer.appendChild(message);
+  mainContainer.appendChild(textBox);
   mainContainer.appendChild(choiceDiv);
 }
 
@@ -84,18 +49,16 @@ function displayRoundSelectionFrame() {
   computerWins = 0;
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = 'Best of ...?';
+  const textBox = createTextBox([['h1', 'Best of ...?']]);
   const choiceDiv = createChoiceDiv({'3': displayFirstHandChoiceFrame, '5': displayFirstHandChoiceFrame, '7': displayFirstHandChoiceFrame, 'other': displayRoundInputFrame});
-  mainContainer.appendChild(message);
+  mainContainer.appendChild(textBox);
   mainContainer.appendChild(choiceDiv);
 }
 
 function displayRoundInputFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = "Write the number of rounds you'd like to play below and hit enter.";
+  const textBox = createTextBox([['h1', "Write the number of rounds you'd like to play below and hit enter."]]);
   const choiceDiv = createElement('div', {'class': ['choices']});
   const goBack = createElement('button');
   goBack.textContent = 'go back?';
@@ -105,7 +68,7 @@ function displayRoundInputFrame() {
   choiceDiv.appendChild(goBack);
   choiceDiv.appendChild(numRoundsInput);
   
-  mainContainer.appendChild(message);
+  mainContainer.appendChild(textBox);
   mainContainer.appendChild(choiceDiv);
 }
 
@@ -129,20 +92,18 @@ function displayFirstHandChoiceFrame(e, numSupplied) {
   else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = 'Make your decision';
+  const textBox = createTextBox([['h1', 'Make your decision']]);
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
-  mainContainer.appendChild(message);
+  mainContainer.appendChild(textBox);
   mainContainer.appendChild(choiceDiv);
 }
 
 function displayHandChoiceFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const message = createElement('h1', {"class": ["text-background"]});
-  message.textContent = 'Make your decision';
+  const textBox = createTextBox([['h1', 'Make your decision']]);
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
-  mainContainer.appendChild(message);
+  mainContainer.appendChild(textBox);
   mainContainer.appendChild(choiceDiv);
 }
 
@@ -155,32 +116,19 @@ function displayRoundResultFrame() {
   if (outcome === -1) computerWins++;
   if (playerWins === numWinsRequired || computerWins === numWinsRequired) {
     clearFrame();
-    const textContent = createElement('div', {"class": ["text-background"]});
-    const finalResultText = createElement('h1');
-    finalResultText.textContent = calculateFinalResultString(playerWins, computerWins);
-    const finalTotals = createElement('p');
-    finalTotals.textContent = calculateFinalTotalsString(playerWins, computerWins);
-    const playAgainMessage = createElement('p', {"class": ["text-background"]});
-    playAgainMessage.textContent = 'Use your secret time travel machine to reverse time and start again?';
+    const finalResultsTextBox = createTextBox([['h1', calculateFinalResultString(playerWins, computerWins)],
+                                               ['p', calculateFinalTotalsString(playerWins, computerWins)]]);
+    const playAgainTextBox = createTextBox([['p', 'Use your secret time travel machine to reverse time and start again?']]);
     const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayEndFrame});
-    textContent.appendChild(finalResultText);
-    textContent.appendChild(finalTotals);
-    mainContainer.appendChild(textContent);
-    mainContainer.appendChild(playAgainMessage);
+    mainContainer.appendChild(finalResultsTextBox);
+    mainContainer.appendChild(playAgainTextBox);
     mainContainer.appendChild(choiceDiv);
   } else {
     clearFrame();
-    const textContent = createElement('div', {"class": ["text-background"]});
-    const outcomeText = createElement('h1');
-    outcomeText.textContent = calculateOutcomeString(outcome, playerChoice, computerChoice);
-    const currentResults = createElement('p');
-    currentResults.textContent = calculateCurrentScoreString(playerWins, computerWins);
+    const outcomeTextBox = createTextBox([['h1', calculateOutcomeString(outcome, playerChoice, computerChoice)],
+                                          ['p', calculateCurrentScoreString(playerWins, computerWins)]]);
     const continueButton = createChoiceDiv({'continue': displayHandChoiceFrame});
-    continueButton.setAttribute("data-first-pass", "false"); //delete?
-    continueButton.addEventListener('click', displayHandChoiceFrame);
-    textContent.appendChild(outcomeText);
-    textContent.appendChild(currentResults);
-    mainContainer.appendChild(textContent);
+    mainContainer.appendChild(outcomeTextBox);
     mainContainer.appendChild(continueButton);
   }
 }
@@ -188,13 +136,13 @@ function displayRoundResultFrame() {
 function displayEndFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const endMessage = createElement('h1', {"class": ["text-background"]});
+  let textBox = null;
   if (playerWins > computerWins) {
-    endMessage.textContent = 'A glorious new era for humanity awaits!';
+    textBox = createTextBox([['h1', 'A glorious new era for humanity awaits!']]);
   } else {
-    endMessage.textContent = 'You have doomed us all. You were the wrong choice...';
+    textBox = createTextBox([['h1', 'You have doomed us all. You were the wrong choice...']]);
   }
-  mainContainer.appendChild(endMessage);
+  mainContainer.appendChild(textBox);
 }
 
 
@@ -303,4 +251,25 @@ function createChoiceDiv(contentFunctionPairs) {
     choiceDiv.appendChild(button);
   }
   return choiceDiv;
+}
+
+function createTextBox(typeTextPairs) {
+  const textBox = createElement('div', {"class": ["text-background"]});
+  for (const pair of typeTextPairs) {
+    const textElement = createElement(pair[0]);
+    textElement.textContent = pair[1];
+    textBox.appendChild(textElement);
+  }
+  return textBox;
+}
+
+function buildIntroFrame(message, nextFrame) {
+  const mainContainer = getMainContainer();
+  
+  const title = createTextBox([['h1', message]]);
+  
+  const choiceDiv = createChoiceDiv({'continue': nextFrame});
+  
+  mainContainer.appendChild(title);
+  mainContainer.appendChild(choiceDiv);
 }
