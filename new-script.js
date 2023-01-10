@@ -26,10 +26,8 @@ function displayIntroFrame4() {
 function displayStartFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-
   const textBox = createTextBox([['h1', "Are you ready?"]])
   const choiceDiv = createChoiceDiv({'I am ready': displayRoundSelectionFrame, 'wait...': displayNotReadyFrame});
-  
   mainContainer.append(textBox, choiceDiv);
 }
 
@@ -45,6 +43,7 @@ function displayRoundSelectionFrame() {
   numWinsRequired = 0;
   playerWins = 0;
   computerWins = 0;
+
   clearFrame();
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', 'Best of ...?']]);
@@ -57,10 +56,12 @@ function displayRoundInputFrame() {
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', "Write the number of rounds you'd like to play below and hit enter."]]);
   const choiceDiv = createChoiceDiv({'go back?': displayRoundSelectionFrame});
+
   const numRoundsInput = createElement('input');
   numRoundsInput.addEventListener('keyup', checkValid);
-  choiceDiv.appendChild(numRoundsInput);
   
+  choiceDiv.appendChild(numRoundsInput);
+
   mainContainer.append(textBox, choiceDiv);
 }
 
@@ -80,8 +81,9 @@ function validNumberOfRounds(num) {
 }
 
 function displayFirstHandChoiceFrame(e, numSupplied) {
-  if (numSupplied !== undefined) numWinsRequired = Math.floor(numSupplied / 2)+ 1;
+  if (numSupplied !== undefined) numWinsRequired = Math.floor(numSupplied / 2) + 1;
   else numWinsRequired = Math.floor((Number(this.textContent) / 2)) + 1;
+
   clearFrame();
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', 'Make your decision']]);
@@ -101,22 +103,29 @@ function displayRoundResultFrame() {
   const mainContainer = getMainContainer();
   const playerChoice = this.textContent;
   const computerChoice = determineComputerSelection();
+
   let outcome = playRound(playerChoice, computerChoice);
+
   if (outcome === 1) playerWins++;
-  if (outcome === -1) computerWins++;
+  else if (outcome === -1) computerWins++;
+
   if (playerWins === numWinsRequired || computerWins === numWinsRequired) {
+
     clearFrame();
     const finalResultsTextBox = createTextBox([['h1', calculateFinalResultString(playerWins, computerWins)],
                                                ['p', calculateFinalTotalsString(playerWins, computerWins)]]);
     const playAgainTextBox = createTextBox([['p', 'Use your secret time travel machine to reverse time and start again?']]);
     const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayEndFrame});
     mainContainer.append(finalResultsTextBox, playAgainTextBox, choiceDiv);
+
   } else {
+
     clearFrame();
     const outcomeTextBox = createTextBox([['h1', calculateOutcomeString(outcome, playerChoice, computerChoice)],
                                           ['p', calculateCurrentScoreString(playerWins, computerWins)]]);
     const continueButton = createChoiceDiv({'continue': displayHandChoiceFrame});
     mainContainer.append(outcomeTextBox, continueButton);
+
   }
 }
 
@@ -252,10 +261,7 @@ function createTextBox(typeTextPairs) {
 
 function buildIntroFrame(message, nextFrame) {
   const mainContainer = getMainContainer();
-  
   const title = createTextBox([['h1', message]]);
-  
   const choiceDiv = createChoiceDiv({'continue': nextFrame});
-
   mainContainer.append(title, choiceDiv);
 }
