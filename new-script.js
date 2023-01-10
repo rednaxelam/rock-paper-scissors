@@ -30,8 +30,7 @@ function displayStartFrame() {
   const textBox = createTextBox([['h1', "Are you ready?"]])
   const choiceDiv = createChoiceDiv({'I am ready': displayRoundSelectionFrame, 'wait...': displayNotReadyFrame});
   
-  mainContainer.appendChild(textBox);
-  mainContainer.appendChild(choiceDiv);
+  mainContainer.append(textBox, choiceDiv);
 }
 
 function displayNotReadyFrame() {
@@ -39,8 +38,7 @@ function displayNotReadyFrame() {
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', 'This might be our only chance to win the war. Please do this for us.']]);
   const choiceDiv = createChoiceDiv({'ok...': displayRoundSelectionFrame});
-  mainContainer.appendChild(textBox);
-  mainContainer.appendChild(choiceDiv);
+  mainContainer.append(textBox, choiceDiv);
 }
 
 function displayRoundSelectionFrame() {
@@ -51,8 +49,7 @@ function displayRoundSelectionFrame() {
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', 'Best of ...?']]);
   const choiceDiv = createChoiceDiv({'3': displayFirstHandChoiceFrame, '5': displayFirstHandChoiceFrame, '7': displayFirstHandChoiceFrame, 'other': displayRoundInputFrame});
-  mainContainer.appendChild(textBox);
-  mainContainer.appendChild(choiceDiv);
+  mainContainer.append(textBox, choiceDiv);
 }
 
 function displayRoundInputFrame() {
@@ -68,8 +65,7 @@ function displayRoundInputFrame() {
   choiceDiv.appendChild(goBack);
   choiceDiv.appendChild(numRoundsInput);
   
-  mainContainer.appendChild(textBox);
-  mainContainer.appendChild(choiceDiv);
+  mainContainer.append(textBox, choiceDiv);
 }
 
 function checkValid(e) {
@@ -94,8 +90,7 @@ function displayFirstHandChoiceFrame(e, numSupplied) {
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', 'Make your decision']]);
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
-  mainContainer.appendChild(textBox);
-  mainContainer.appendChild(choiceDiv);
+  mainContainer.append(textBox, choiceDiv);
 }
 
 function displayHandChoiceFrame() {
@@ -103,8 +98,7 @@ function displayHandChoiceFrame() {
   const mainContainer = getMainContainer();
   const textBox = createTextBox([['h1', 'Make your decision']]);
   const choiceDiv = createChoiceDiv({'rock': displayRoundResultFrame, 'paper': displayRoundResultFrame, 'scissors': displayRoundResultFrame});
-  mainContainer.appendChild(textBox);
-  mainContainer.appendChild(choiceDiv);
+  mainContainer.append(textBox, choiceDiv);
 }
 
 function displayRoundResultFrame() {
@@ -120,16 +114,13 @@ function displayRoundResultFrame() {
                                                ['p', calculateFinalTotalsString(playerWins, computerWins)]]);
     const playAgainTextBox = createTextBox([['p', 'Use your secret time travel machine to reverse time and start again?']]);
     const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayEndFrame});
-    mainContainer.appendChild(finalResultsTextBox);
-    mainContainer.appendChild(playAgainTextBox);
-    mainContainer.appendChild(choiceDiv);
+    mainContainer.append(finalResultsTextBox, playAgainTextBox, choiceDiv);
   } else {
     clearFrame();
     const outcomeTextBox = createTextBox([['h1', calculateOutcomeString(outcome, playerChoice, computerChoice)],
                                           ['p', calculateCurrentScoreString(playerWins, computerWins)]]);
     const continueButton = createChoiceDiv({'continue': displayHandChoiceFrame});
-    mainContainer.appendChild(outcomeTextBox);
-    mainContainer.appendChild(continueButton);
+    mainContainer.append(outcomeTextBox, continueButton);
   }
 }
 
@@ -269,7 +260,6 @@ function buildIntroFrame(message, nextFrame) {
   const title = createTextBox([['h1', message]]);
   
   const choiceDiv = createChoiceDiv({'continue': nextFrame});
-  
-  mainContainer.appendChild(title);
-  mainContainer.appendChild(choiceDiv);
+
+  mainContainer.append(title, choiceDiv);
 }
