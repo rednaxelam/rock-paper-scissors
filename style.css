@@ -8,6 +8,7 @@ body {
   background-image: url("./img/stars-background.jpg");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
+  background-attachment: fixed;
   min-height: 100vh;
   border-top: 1px black solid;
   display: flex;
