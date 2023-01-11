@@ -1,10 +1,40 @@
+/* This file is divided into 6 sections:
+
+-Initial webpage calls
+-displayFrame and event listener function definitions
+-Game logic (this is mostly contained in the displayFrame functions, but there are a couple of functions in this section)
+-String creation
+-DOM element creation
+-Utility functions
+
+Each section has a comment with a "##" and section name above it for easy navigation. */
+
+
+/* How the game works:
+
+index.html has a div with id "main-container".
+
+When a displayFrame function is called, the function will remove all children of the "main-container" to clear the screen, create the relevant new DOM elements while 
+doing any required game logic or string creation, and then append these new DOM elements to the "main-container" for display to the user. Event listeners are added
+to buttons and input fields to enable the player to call the appropriate displayFrame function when interacted with.
+
+You can think of the game as moving from one frame to another, based on user actions and game results. */
+
+
+/* ## Initial webpage calls */
+
+// This is used to display the first frame. All other displayFrame functions are called via event listeners.
 displayIntroFrame1();
+
+// The following are global variables to avoid having to pass them from function to function.
 let numWinsRequired;
 let playerWins;
 let computerWins;
 
+
+/* ## displayFrame and event listener function definitions */
+
 function displayIntroFrame1() {
-  clearFrame();
   buildIntroFrame("Humans have been at war with the robots for a 1,000,000,000 years in a bid to control the universe.", displayIntroFrame2);
 }
 
@@ -101,6 +131,7 @@ function displayHandChoiceFrame() {
 
 function displayRoundResultFrame() {
   const mainContainer = getMainContainer();
+
   const playerChoice = this.textContent;
   const computerChoice = determineComputerSelection();
 
@@ -141,7 +172,7 @@ function displayEndFrame() {
   mainContainer.appendChild(textBox);
 }
 
-
+/* ## Game logic */
 
 function playRound(playerSelection, computerSelection) {
   const win = ((playerSelection === 'rock' && computerSelection === 'scissors')
@@ -156,6 +187,18 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
+function determineComputerSelection() {
+  const randomNumber = Math.floor(Math.random() * 3);
+  switch (randomNumber) {
+    case 0: return 'rock';
+    case 1: return 'paper';
+    default: return 'scissors';
+  }
+}
+
+
+/* ## String creation */
+
 function calculateOutcomeString(outcome, playerSelection, computerSelection) {
   if (outcome == 1) {
     return `You won the round. ${capitalizeString(playerSelection)} beats ${computerSelection}.`;
@@ -163,6 +206,16 @@ function calculateOutcomeString(outcome, playerSelection, computerSelection) {
     return `You drew the round. You both chose ${playerSelection}.`;
   } else {
     return `You lost the round. ${capitalizeString(playerSelection)} loses to ${computerSelection}.`;
+  }
+}
+
+function capitalizeString(str) {
+  if (str.length === 0) {
+    return str;
+  } else if (str.length === 1) {
+    return str.charAt(0).toUpperCase();
+  } else {
+    return str.charAt(0).toUpperCase() + str.substring(1, str.length);
   }
 }
 
@@ -186,45 +239,15 @@ function makePlural(numDistinct) {
   }
 }
 
-function capitalizeString(str) {
-  if (str.length === 0) {
-    return str;
-  } else if (str.length === 1) {
-    return str.charAt(0).toUpperCase();
-  } else {
-    return str.charAt(0).toUpperCase() + str.substring(1, str.length);
-  }
-}
-
 function calculateCurrentScoreString(playerWins, computerWins) {
   return `Current results: You have won ${playerWins} round${makePlural(playerWins)}, and the computer has won ${computerWins} round${makePlural(computerWins)}.`;
 }
 
-function determineComputerSelection() {
-  const randomNumber = Math.floor(Math.random() * 3);
-  switch (randomNumber) {
-    case 0: return 'rock';
-    case 1: return 'paper';
-    default: return 'scissors';
-  }
-}
+/* ## DOM element creation */
 
-function clearFrame() {
-  const mainContainer = getMainContainer();
-  while (mainContainer.hasChildNodes()) {
-    mainContainer.removeChild(mainContainer.firstChild);
-  }
-}
-
-function getMainContainer() {
-  const mainContainer = document.querySelector('#main-container');
-  return mainContainer;
-}
-
-// got structure of this function (with changes made by myself) from Derlin's answer on https://stackoverflow.com/questions/43168284/javascript-createelement-function
+// got structure of createElement function (with changes made by myself) from Derlin's answer on https://stackoverflow.com/questions/43168284/javascript-createelement-function
 function createElement(type, attributes = {}) {
   const element = document.createElement(type);
-  if ( !(Object.keys(attributes).length === 0) );
   for (const key in attributes) {
     if (key === "class") {
         const classArray = attributes["class"];
@@ -249,6 +272,7 @@ function createChoiceDiv(contentFunctionPairs) {
   return choiceDiv;
 }
 
+// 
 function createTextBox(typeTextPairs) {
   const textBox = createElement('div', {"class": ["text-background"]});
   for (const pair of typeTextPairs) {
@@ -257,6 +281,20 @@ function createTextBox(typeTextPairs) {
     textBox.appendChild(textElement);
   }
   return textBox;
+}
+
+/* ## Utility functions */
+
+function clearFrame() {
+  const mainContainer = getMainContainer();
+  while (mainContainer.hasChildNodes()) {
+    mainContainer.removeChild(mainContainer.firstChild);
+  }
+}
+
+function getMainContainer() {
+  const mainContainer = document.querySelector('#main-container');
+  return mainContainer;
 }
 
 function buildIntroFrame(message, nextFrame) {
