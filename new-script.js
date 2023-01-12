@@ -40,7 +40,7 @@ function displayIntroFrame1() {
 
 function displayIntroFrame2() {
   clearFrame();
-  buildIntroFrame("With no end in sight, it has been decided that a game of rock paper scissors will determine the winner of the war.", displayIntroFrame3);
+  buildIntroFrame("With no end to the war in sight, it has been decided that a game of rock paper scissors will determine the winner.", displayIntroFrame3);
 }
 
 function displayIntroFrame3() {
