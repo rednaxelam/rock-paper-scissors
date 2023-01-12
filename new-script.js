@@ -64,7 +64,7 @@ function displayStartFrame() {
 function displayNotReadyFrame() {
   clearFrame();
   const mainContainer = getMainContainer();
-  const textBox = createTextBox([['h1', 'This might be our only chance to win the war. Please do this for us.']]);
+  const textBox = createTextBox([['h1', 'This might be our only chance to win the war. You must help us.']]);
   const choiceDiv = createChoiceDiv({'ok...': displayRoundSelectionFrame});
   mainContainer.append(textBox, choiceDiv);
 }
@@ -144,10 +144,10 @@ function displayRoundResultFrame() {
 
     clearFrame();
     const finalResultsTextBox = createTextBox([['h1', calculateFinalResultString(playerWins, computerWins)],
+                                               ['p', calculateOutcomeString(outcome, playerChoice, computerChoice)],
                                                ['p', calculateFinalTotalsString(playerWins, computerWins)]]);
-    const playAgainTextBox = createTextBox([['p', 'Use your secret time travel machine to reverse time and start again?']]);
-    const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayEndFrame});
-    mainContainer.append(finalResultsTextBox, playAgainTextBox, choiceDiv);
+    const choiceDiv = createChoiceDiv({'continue': displayRestartFrame});
+    mainContainer.append(finalResultsTextBox, choiceDiv);
 
   } else {
 
@@ -158,6 +158,15 @@ function displayRoundResultFrame() {
     mainContainer.append(outcomeTextBox, continueButton);
 
   }
+}
+
+function displayRestartFrame() {
+  clearFrame();
+  const mainContainer = getMainContainer();
+  const playAgainTextBox = createTextBox([['h1', 'Use your secret time travel machine to reverse time and start again?']]);
+  const choiceDiv = createChoiceDiv({'yes': displayRoundSelectionFrame, 'no': displayEndFrame});
+  mainContainer.append(playAgainTextBox, choiceDiv);
+
 }
 
 function displayEndFrame() {
